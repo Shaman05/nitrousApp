@@ -1,0 +1,14 @@
+{
+  "name": "A simple web chat room",
+	"author": "shaman",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "3.4.4",
+    "jade": "*",
+	  "socket.io": "0.9.16"
+  }
+}
