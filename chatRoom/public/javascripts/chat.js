@@ -13,18 +13,17 @@
 		var $chatBox = $('#chatBox');
 		var socket = io.connect('http://localhost');
 
-		socket.on('notice', function(message){
-			console.log(message);
+		socket.on('notice', sysHandler);
 
-		});
-
-		socket.on('lose user', function(message){
-			console.log(message);
-		});
+		socket.on('lose user', sysHandler);
 
 		socket.on('error', function(error){
 			console.log('error:', error);
 		});
+
+		function sysHandler(message){
+			print({type:'sys', text:message});
+		}
 
 		function print(message){
 			var type = message.type;
