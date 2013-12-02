@@ -16,13 +16,16 @@ function start(server){
 	var list = new UserList(100);
 	sockets.on('connection', function(socket){
 		var userID = socket.id;
-		list.add({
-			id: userID
-		});
-		console.log(list);
+		list.add(userID);
 
 		//新用户加入发送广播
-		sockets.emit('notice', userID + ' has join!');
+    sockets.emit('notice', userID + ' has join!');
+
+    //改名
+    sockets.on('changeName', function(data){
+      console.log(data);
+      //sockets.emit();
+    });
 
 		//disconnect
 		socket.on('disconnect', function(){

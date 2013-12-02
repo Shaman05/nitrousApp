@@ -8,6 +8,8 @@
  * Version 3.7
  */
 
+var User = require('./user').User;
+
 function UserList(limit){
 	//最大用户数
 	this.limit = limit;
@@ -18,18 +20,24 @@ function UserList(limit){
 }
 
 UserList.prototype = {
-	add: function(user){
-		var id = user.id;
-		if(this.size < this.limit && !!id){
-			this.list[id] = user;
-			this.size += 1;
-		}
+	add: function(id){
+		if(this.size < this.limit){
+      if(!!id){
+        console.log(User);
+			  this.list[id] = new User(id); // ？User类必须在UserList模块里才能正确的new出来
+			  this.size += 1;
+      }else{
+        console.log('参数错误!');
+      }
+		}else{
+      console.log('聊天室已满!');
+    }
 		return this;
 	},
-	remove: function(userId){
+	remove: function(id){
 		var users = this.list;
-		if(users[userId]){
-			delete users[userId];
+		if(users[id]){
+			delete users[id];
 			this.size -= 1;
 		}
 		return this;
@@ -44,8 +52,8 @@ UserList.prototype = {
 		}
 		return list;
 	},
-	get: function(userId){
-		return this.list[userId] || null;
+	getUser: function(id){
+		return this.list[id] || null;
 	}
 };
 
