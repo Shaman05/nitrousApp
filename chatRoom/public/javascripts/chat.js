@@ -26,7 +26,7 @@
 		}
 
 		function print(message){
-			var type = message.type;
+		  var type = message.type;
 			var $row = $('<div class="chatItem"><span class="type"></span><span class="message"></span></div>');
 			var $head = $row.find('.type');
 			var $body = $row.find('.message');
