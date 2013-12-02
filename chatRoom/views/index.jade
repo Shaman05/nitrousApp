@@ -1,15 +1,15 @@
 extends layout
 
 block content
-    //top
+	//top
 	#head.head
-		h1 Welcome #{user}
+		h1 Welcome to web chat
 
 	//middle
 	#content.content
-		p chat box:
-		#chatBox.chatBox
+		p chat box: #{chatBox.title}
+		div#chatBox
 
 	//bottom
 	#foot.foot
-		p Power by: #{power}
+		p Power by: #{power} - author: #{user}

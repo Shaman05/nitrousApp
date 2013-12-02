@@ -26,21 +26,22 @@
 		}
 
 		function print(message){
-		  var type = message.type;
+      console.log(message);
 			var $row = $('<div class="chatItem"><span class="type"></span><span class="message"></span></div>');
 			var $head = $row.find('.type');
 			var $body = $row.find('.message');
-			//系统消息
-			if(type == 'join' || type == 'leave' || type == 'error'){
-				$head.addClass('sys').text('【系统】：');
-			}
-			//聊天消息
-			if(type == 'chat'){
-				$head.addClass('chat').text('【' +  + '】：');
-				if(message.isPrivate){
-					$head.addClass('private');
-				}
-			}
+      var type = message.type;
+      var sys = ['sys', '【系统消息】'];
+      var chat = ['chat', '【聊天消息】'];
+      var typeMap = {
+        //系统消息
+        sys: sys, join: sys, leave: sys, error: sys,
+        //聊天消息
+        chat: chat
+      };
+      $head.addClass(typeMap[type][0]).text(typeMap[type][1]);
+      //私聊
+      message.isPrivate && $head.addClass('private');
 			$body.text(message.text);
 			$chatBox.append($row);
 		}

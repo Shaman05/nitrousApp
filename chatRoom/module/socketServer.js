@@ -22,7 +22,7 @@ function start(server){
 		console.log(list);
 
 		//新用户加入发送广播
-		sockets.emit('notice', {message: userID + ' has join!'});
+		sockets.emit('notice', userID + ' has join!');
 
 		//disconnect
 		socket.on('disconnect', function(){
