@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <style type="text/css">
+        html,body{margin: 0; height: 100%;}
+        h1{margin: 0;}
+    </style>
+</head>
+<body>
+<h1>Hello World!</h1>
+<script type="text/javascript">
+    // Load native UI library
+    var gui = require('nw.gui');
+
+    // Create a tray icon
+    var tray = new gui.Tray({ title: 'Tray', icon: 'image/1.png' });
+
+    // Give it a menu
+    var menu = new gui.Menu();
+    menu.append(new gui.MenuItem({ type: 'checkbox', label: '系统托盘图标哦' }));
+    tray.menu = menu;
+
+    // Remove the tray
+    //tray.remove();
+    //tray = null;
+</script>
+</body>
+</html>

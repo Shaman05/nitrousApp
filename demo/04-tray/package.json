@@ -1,0 +1,15 @@
+{
+  "name": "nw-demo",
+  "main": "index.html",
+  "window": {
+    "icon": "image/1.png",
+    "title": "测试窗口",
+    //"toolbar": false,
+    "height": 400,
+    "min_height": 400,
+    "max_height": 400,
+    "width": 360,
+    "min_width": 360,
+    "max_width": 360
+  }
+}

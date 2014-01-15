@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello World!</title>
+</head>
+<body>
+<h1>Hello World!</h1>
+We are using node.js <script>document.write(process.version)</script>.
+<script type="text/javascript">
+    // Load native UI library.
+    var gui = require('nw.gui');
+
+    // Open URL with default browser.
+    //gui.Shell.openExternal('https://github.com/rogerwang/node-webkit');
+
+    // Open a text file with default text editor.
+    //这个路径是相对nw.exe
+    //gui.Shell.openItem('test.txt');
+
+    // Open a file in file explorer.
+    gui.Shell.showItemInFolder('test.txt');
+</script>
+</body>
+</html>

@@ -11,14 +11,16 @@
 (function(root, $, io){
 	$(function(){
 		var $chatBox = $('#chatBox');
-		var socket = io.connect('http://localhost');
+    var host = 'ws://localhost:3000';
+    //console.log(host);
+		var socket = io.connect(host);
 
 		socket.on('notice', sysHandler);
 
 		socket.on('lose user', sysHandler);
 
 		socket.on('error', function(error){
-			console.log('error:', error);
+			//console.log('error:', error);
 		});
 
 		function sysHandler(message){
@@ -26,7 +28,7 @@
 		}
 
 		function print(message){
-      console.log(message);
+      //console.log(message);
 			var $row = $('<div class="chatItem"><span class="type"></span><span class="message"></span></div>');
 			var $head = $row.find('.type');
 			var $body = $row.find('.message');

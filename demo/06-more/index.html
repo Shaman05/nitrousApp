@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <style type="text/css">
+        html,body{margin: 0; height: 100%;}
+        h1{margin: 0;}
+    </style>
+</head>
+<body>
+<h1>Hello World!</h1>
+<!--<textarea name="" id="edit" cols="30" rows="10"></textarea>-->
+<script type="text/javascript">
+//    var textarea = document.getElementById('edit');
+    function Menu(cutLabel, copyLabel, pasteLabel) {
+        var gui = require('nw.gui')
+            , menu = new gui.Menu()
+
+            , cut = new gui.MenuItem({
+                label: cutLabel || "Cut"
+                , click: function() {
+                    document.execCommand("cut");
+                    console.log('Menu:', 'cutted to clipboard');
+                }
+            })
+
+            , copy = new gui.MenuItem({
+                label: copyLabel || "Copy"
+                , click: function() {
+                    document.execCommand("copy");
+                    console.log('Menu:', 'copied to clipboard');
+                }
+            })
+
+            , paste = new gui.MenuItem({
+                label: pasteLabel || "Paste"
+                , click: function() {
+                    document.execCommand("paste");
+                    console.log('Menu:', 'pasted to textarea');
+                }
+            });
+
+        menu.append(cut);
+        menu.append(copy);
+        menu.append(paste);
+
+        return menu;
+    }
+
+    var menu = new Menu('剪切', '复制', '粘贴');
+    document.addEventListener('contextmenu', function(e){
+        e.preventDefault();
+        menu.popup(e.x, e.y);
+    });
+
+</script>
+</body>
+</html>
