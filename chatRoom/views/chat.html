@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>基于 nodejs + socket.io 的聊天室</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <style type="text/css">
+    body {font-size: 12px; line-height: 20px; padding-left: 200px}
+    ul, li, p, h4 {margin: 0;padding: 0}
+    h4{padding: 6px 0;}
+    hr {margin-bottom: 12px}
+    .left {width: 200px; float: left; margin-left: -200px}
+    .userList {padding-left: 1em}
+    .info {height: 360px; width: 100%; border: 1px solid #cccccc; overflow: auto}
+    .info-row{padding: 0 4px;}
+  </style>
+</head>
+<body>
+<div class="left">
+  <h4>用户列表：</h4>
+  <ul id="userList" class="userList"></ul>
+</div>
+<div class="right">
+  <form id="chatForm">
+    <h4>消息：</h4>
+    <div id="info" class="info"></div>
+    <hr/>
+    <div>提示：输入-help获取帮助</div>
+    <input type="text" id="input" size="50"/><input type="submit" value="发送"/>
+  </form>
+</div>
+<script type="text/javascript" src="/javascripts/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script type="text/javascript">
+  (function (root, io) {
+
+    var $chatForm = $('#chatForm');
+    var $list = $('#userList');
+    var $info = $('#info');
+    var $input = $('#input');
+    var helpInfo = '帮助命令：<br>' +
+    '[-help(查看帮助)] <br>' +
+    '[-rename xxx(修改名字为xxx,名字只允许数字、字母和中文,长度不大于8)] <br>' +
+    '[-clear 清空聊天记录]';
+
+    var host = 'ws://localhost:3000/chat';
+    var socket = io.connect(host);
+
+    socket.on('connecting', function(){
+      logInfo('正在连接到聊天服务器...', 'system');
+    });
+
+    socket.on('connect', function(){
+      logInfo('欢迎来到聊天室', 'system');
+    });
+
+    //新用户加入
+    socket.on('join', function (message) {
+      logInfo(message, 'system');
+    });
+
+    //用户离开
+    socket.on('leave', function (message) {
+      logInfo(message, 'system');
+    });
+
+    //刷新用户列表
+    socket.on('refresh online', function(list){
+      refreshList(list);
+    });
+
+    //群聊消息
+    socket.on('message', function(data){
+      logInfo(data.speaker + ' 说：' + data.message, 'public');
+    });
+
+    //用户改名字
+    socket.on('rename', function (message) {
+      logInfo(message, 'system');
+    });
+
+    //断开连接
+    socket.on('disconnect', function () {
+      logInfo('失去连接！', 'system');
+    });
+
+    //连接出错
+    socket.on('error', function (error) {
+      logInfo('socket 服务器连接出错！' + error, 'system');
+    });
+
+    //提交发言
+    $chatForm.on('submit', function () {
+      var message = $.trim($input.val());
+      if(!message)return false;
+      switch (message){
+        case '-help':
+          logInfo(helpInfo, 'system');
+          break;
+        case '-clear':
+          $info.empty();
+          break;
+        case '-rename':
+          logInfo('名字不能为空！', 'system');
+          break;
+        default :
+          if(/^-rename\s/.test(message)){
+            //改名
+            var _name = $.trim(message.split(/-rename\s/)[1]);
+            if(/^[0-9a-zA-Z\u4E00-\u9FA5]{1,8}$/.test(_name)){
+              socket.emit('rename', _name);
+            }else{
+              logInfo('不合法的名字！', 'system');
+            }
+          }else if(/^@[0-9a-zA-Z\u4E00-\u9FA5]{1,8}\s/.test(message)){
+            //todo 发私聊信息
+            /*var _data = message.split(/@[0-9a-zA-Z\u4E00-\u9FA5]{1,8}\s/);
+            var _message = $.trim(_data[1]);
+            socket.emit('private message', {
+              to: '',
+              message: _message
+            });*/
+          }else{
+            //群聊信息
+            socket.send(message);
+          }
+      };
+      $input.val('');
+      return false;
+    });
+
+    //刷新在线用户列表
+    function refreshList(list) {
+      $list.empty();
+      $.each(list, function (i, user) {
+        $('<li id="' + user.id + '">' + showName(user) + '</li>').appendTo($list);
+      });
+    }
+
+    function showName(d){
+      return d.name ? d.name : '游客(' + d.id + ')';
+    }
+
+    function rename(id, name) {
+      $('#' + id).text(name);
+    }
+
+    function logInfo(msg, type) {
+      var msgTypeMap = {
+        system: ['blue', '系统'],
+        public: ['green', null],
+        private: ['orange', null]
+      };
+      var _color = msgTypeMap[type][0];
+      var _object = msgTypeMap[type][1];
+      _object = _object ? '<span style="color: ' + _color + '">【' + _object + '】：</span>' : '';
+      $('<div class="info-row">' + _object + msg + '</div>').appendTo($info);
+      $info.scrollTop(99999);
+    }
+  })(window, io);
+</script>
+</body>
+</html>

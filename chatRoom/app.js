@@ -9,7 +9,7 @@ var http = require('http');
 var path = require('path');
 var app = express();
 var server = http.createServer(app);
-var socketServer = require('./module/socketServer');
+var socketServer = require('./channel/socket');
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -30,7 +30,7 @@ if ('development' == app.get('env')) {
 }
 
 //routes
-app.get('/', routes.index);
+app.get('/chat', routes.index);
 
 //start socket
 socketServer.start(server);
