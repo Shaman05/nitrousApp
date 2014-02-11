@@ -1,0 +1,11 @@
+{
+  "name": "Fecfm",
+  "main": "index.html",
+  "window": {
+    "icon": "./edit_page.png",
+    "title": "前端代码碎片工具",
+    "toolbar": false,
+    "min_height": 360,
+    "min_width": 720
+  }
+}
