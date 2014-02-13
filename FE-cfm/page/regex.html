@@ -1,0 +1,58 @@
+<style>
+  h4{
+    font-size: 14px;
+  }
+  textarea{
+    height: 100px;
+    width: 100%;
+    border-color: #cccccc;
+    border-radius: 5px;
+    resize: none;
+  }
+  .input-prepend{
+    display: inline-block;
+    width: 500px;
+  }
+</style>
+<div class="regex" id="regex">
+  <!--<h3>正则表达式测试</h3>-->
+  <div class="block">
+    <form class="well form-inline">
+      <div class="input-prepend">
+        <span class="add-on">正则表达式</span><input type="text" id="textPattern" placeholder="在此输入正则表达式" class="input-xlarge">
+        <select class="form-control input-sm">
+          <option value="0">常用正则表达式</option>
+          <option value="regex_1">匹配中文字符</option>
+          <option value="regex_2">匹配双字节字符(包括汉字在内)</option>
+          <option value="regex_3">匹配空白行</option>
+          <option value="regex_4">匹配Email地址</option>
+          <option value="regex_5">匹配网址URL</option>
+          <option value="regex_6">匹配国内电话号码</option>
+          <option value="regex_7">匹配腾讯QQ号</option>
+          <option value="regex_8">匹配中国邮政编码</option>
+          <option value="regex_9">匹配18位身份证号</option>
+          <option value="regex_10">匹配(年-月-日)格式日期</option>
+          <option value="regex_11">匹配正整数</option>
+          <option value="regex_12">匹配负整数</option>
+          <option value="regex_13">匹配整数</option>
+          <option value="regex_14">匹配非负整数（正整数 + 0）</option>
+          <option value="regex_15">匹配非正整数（负整数 + 0）</option>
+          <option value="regex_16">匹配正浮点数</option>
+          <option value="regex_17">匹配负浮点数</option>
+        </select>
+      </div>
+      <label class="checkbox"><input type="checkbox" value="global" checked="checked" id="optionGlobal" name="optionGlobl">全局搜索</label>
+      <label class="checkbox"><input type="checkbox" value="ignoreCase" id="optionIgnoreCase" name="optionIgnoreCase">忽略大小写</label>
+      <a onclick="return onMatch();" class="btn btn-primary"><i class="icon-chevron-down icon-white"></i>测试匹配</a>
+    </form>
+  </div>
+  <div class="block">
+    <h4>匹配文本：</h4>
+    <textarea id="textSour" placeholder="在此输入待匹配文本"></textarea>
+  </div>
+  <div class="block">
+    <h4>匹配结果：</h4>
+    <textarea id="testResult" class="readonly" readonly></textarea>
+  </div>
+</div>
+<script src="./js/page/regex.js"></script>

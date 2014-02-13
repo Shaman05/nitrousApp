@@ -9,12 +9,11 @@
 
   'use strict';
 
+  var gui = require('nw.gui');
+  var Window = gui.Window.get();
+
   win.tray = {
     init: function(){
-      // Load native UI library
-      var gui = require('nw.gui');
-      var Window = gui.Window.get();
-
       // Create a tray icon
       var tray = new gui.Tray({
         title: '前端代码碎片工具',

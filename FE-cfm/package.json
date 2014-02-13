@@ -2,10 +2,13 @@
   "name": "Fetool",
   "main": "index.html",
   "window": {
+    "frame": false,
+    "toolbar": false,
     "icon": "images/felogo.png",
     "title": "前端助手",
-    "toolbar": false,
+    "height": 500,
     "min_height": 500,
+    "width": 970,
     "min_width": 970
   }
 }
