@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <link rel="stylesheet" href="./css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="./css/nanoscroller.css"/>
   <link rel="stylesheet" href="./css/main.css"/>
   <title>Fetool - 前端助手</title>
 </head>
@@ -13,10 +14,25 @@
   <table>
     <tbody>
       <tr>
-        <td class="win-drag" width="70"><img src="./images/felogo.png" height="16" width="16" alt=""/> 前端助手</td>
-        <td width="96"><a href="javascript:">chenchao@upg.cn</a></td>
+        <td class="win-drag" width="70">
+          <img src="./images/felogo.png" height="16" width="16" alt=""/> 前端助手
+        </td>
+        <td width="96">
+          <a href="javascript:">chenchao@upg.cn</a>
+        </td>
         <td class="win-drag">&nbsp;</td>
-        <td width="60">
+        <td width="16">
+          <div class="navbar-right">
+            <a id="setting" data-toggle="dropdown" href="javascript:" title="菜单">
+              <img src="./images/icon-setting.png" alt="菜单"/>
+            </a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="setting">
+              <li><a href="javascript:">清除历史数据</a></li>
+              <li><a href="javascript:" data-clickFn="closeWindow">退出</a></li>
+            </ul>
+          </div>
+        </td>
+        <td width="50">
           <div class="op-bar">
             <span class="min-window" data-clickFn="minWindow"><em></em></span>
             <span class="max-window" data-clickFn="maxWindow"><em></em></span>
@@ -38,16 +54,23 @@
           <!--left-->
           <div class="left">
             <div class="btn-group-vertical" style="vertical-align: top">
-              <button type="button" class="btn btn-default" title="代码碎片管理器">CFM</button>
-              <button type="button" class="btn btn-default" data-clickFn="regex" title="正则表达式测试">Regex</button>
+              <button type="button" class="btn btn-default" data-clickFn="cfm">代码碎片</button>
+              <button type="button" class="btn btn-default" data-clickFn="regex">Regex测试</button>
+              <!--<button type="button" class="btn btn-default" data-clickFn="comparisonTable">常用对照表</button>-->
               <div class="btn-group">
-                <button id="btnGroupVerticalDrop3" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                  Dropdown
+                <button id="comparisonTable-group" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                  常用对照表
                   <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="btnGroupVerticalDrop3">
-                  <li><a href="#">Dropdown link</a></li>
-                  <li><a href="#">Dropdown link</a></li>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="comparisonTable-group">
+                  <li><a href="javascript:" data-clickFn="comparisonTable.httpContentType">HTTP Content-type</a></li>
+                  <li><a href="javascript:" data-clickFn="comparisonTable.htmlESC">HTML转义字符</a></li>
+                  <li><a href="javascript:" data-clickFn="comparisonTable.colors">RGB颜色参考</a></li>
+                  <li><a href="javascript:">ASCII对照表</a></li>
+                  <li><a href="javascript:">HTTP状态码详解</a></li>
+                  <li><a href="javascript:">运算符优先级</a></li>
+                  <li><a href="javascript:">TCP/UDP常见端口参考</a></li>
+                  <li><a href="javascript:">网页字体参考</a></li>
                 </ul>
               </div>
             </div>
@@ -67,6 +90,7 @@
 </div>
 <script src="./js/jquery-1.10.2.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>
+<script src="./js/jquery.nicescroll.min.js"></script>
 <script src="./js/util.js"></script>
 <script src="./js/eventGroup.js"></script>
 <script src="./js/systemTray.js"></script>
