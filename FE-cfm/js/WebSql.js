@@ -14,7 +14,7 @@
 
   win.webStorage = win.webStorage || {};
 
-  webStorage.webSql = function (){
+  webStorage.WebSql = function (){
     var _this = this;
     //数据库
     var _dataBase;
@@ -118,7 +118,6 @@
             alert('查询失败: ' + error.message);
           });
       });
-
     }
 
     //更新数据

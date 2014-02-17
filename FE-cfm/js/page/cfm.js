@@ -9,6 +9,10 @@
 
   'use strict';
 
+  var webSql = new win.webStorage.WebSql();
+
+  console.log(webSql)
+
   $(function(){
     $('.niceScroll').niceScroll({
       cursorcolor: '#cfcfcf',
