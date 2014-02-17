@@ -3,7 +3,7 @@
   "main": "index.html",
   "window": {
     "frame": false,
-    "toolbar": false,
+    //"toolbar": false,
     "icon": "images/felogo.png",
     "title": "前端助手",
     "height": 500,

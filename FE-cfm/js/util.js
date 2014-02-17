@@ -10,6 +10,15 @@
   'use strict';
 
   win.util = {
+    eventInit: function(){
+      $(document)
+      .on('click', '[data-clickFn]', function(e){
+        emitEvent.call(this, e, 'clickFn');
+      })
+      .on('change', '[data-changeFn]', function(e){
+        emitEvent.call(this, e, 'changeFn');
+      });
+    },
     //执行事件
     eventExec: function(origin, eventGroup){
       var e = eventAnalysis(origin);
@@ -19,7 +28,7 @@
       }
       eventGroup[e.groupName][e.eventFn].apply(this, e.args);
     }
-  }
+  };
 
   //事件代理解析, 支持以命名空间形式定义的事件名称
   function eventAnalysis(origin){
@@ -33,6 +42,14 @@
       eventFn: _eventFn,
       args: _args
     };
+  }
+
+  function emitEvent(e, typeFn){
+    var _event = $(this).attr('data-' + typeFn);
+    var _args = $(this).attr('data-args');
+    win.util.eventExec.call(this, {event: _event, args: _args}, win.eventGroup);
+    e.stopPropagation && e.stopPropagation();
+    e.cancelBubble && (e.cancelBubble = true);
   }
 
 })(window);

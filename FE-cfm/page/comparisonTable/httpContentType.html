@@ -1,17 +1,28 @@
-<div class="main-container niceScroll" id="http-content-type">
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" href="../../css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="../../css/nanoscroller.css"/>
+  <link rel="stylesheet" href="../../css/main.css"/>
+</head>
+
+<body>
+<div class="main-container niceScroll">
   <table class="table">
-    <caption>Content-Type对照表</caption>
-    <thead>
-    <tr>
-      <th class="separateColor">文件扩展名</th>
-      <th>Content-Type(Mime-Type)</th>
-      <th class="separateColor">文件扩展名</th>
-      <th>Content-Type(Mime-Type)</th>
-    </tr>
-    </thead>
+  <caption>Content-Type对照表</caption>
+  <thead>
+  <tr>
+    <th class="separateColor">文件扩展名</th>
+    <th>Content-Type(Mime-Type)</th>
+    <th class="separateColor">文件扩展名</th>
+    <th>Content-Type(Mime-Type)</th>
+  </tr>
+  </thead>
   <tbody>
   <tr>
-    <td class="separateColor">.*（ 二进制流，不知道下载文件类型）</td>
+    <td class="separateColor">.*（二进制流）</td>
     <td>application/octet-stream</td>
     <td class="separateColor">.tif</td>
     <td>image/tiff</td>
@@ -1137,4 +1148,9 @@
   </tbody>
   </table>
 </div>
-<script src="./js/page/comparisonTable.js"></script>
+<script src="../../js/jquery-1.10.2.min.js"></script>
+<script src="../../js/bootstrap.min.js"></script>
+<script src="../../js/jquery.nicescroll.min.js"></script>
+<script src="../../js/page/comparisonTable.js"></script>
+</body>
+</html>

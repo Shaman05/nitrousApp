@@ -9,18 +9,37 @@
 
   'use strict';
 
+  var gui = require('nw.gui');
+  var Window = gui.Window.get();
+  var maxFlag = false;
+
+  win.util.eventInit();
+
   //系统托盘
   win.tray.init();
 
-  //事件
-  $(function(){
-    $(document).on('click', '[data-clickFn]', function(e){
-      var _event = $(this).attr('data-clickFn');
-      var _args = $(this).attr('data-args');
-      win.util.eventExec.call(this, {event: _event, args: _args}, win.eventGroup);
-      e.stopPropagation && e.stopPropagation();
-      e.cancelBubble && (e.cancelBubble = true);
-    })
-  });
+  win.eventGroup = {
+    /*-------UI-------*/
+    //最小化
+    minWindow: function(){
+      Window.minimize();
+    },
+    //最大化
+    maxWindow: function(){
+      maxFlag ? Window.unmaximize() : Window.maximize();
+      maxFlag = !maxFlag;
+    },
+    //关闭
+    closeWindow: function(){
+      Window.close();
+    }
+  };
+
+  Window.on('maximize', resizeWrap);
+  Window.on('unmaximize', resizeWrap);
+
+  function resizeWrap(){
+    //todo
+  }
 
 })(window, jQuery);

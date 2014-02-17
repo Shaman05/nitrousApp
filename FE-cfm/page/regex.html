@@ -1,49 +1,65 @@
-<style>
-  h4{
-    font-size: 14px;
-  }
-  textarea{
-    height: 100px;
-    width: 100%;
-    border-color: #cccccc;
-    border-radius: 5px;
-    resize: none;
-  }
-  .input-prepend{
-    display: inline-block;
-    width: 500px;
-  }
-</style>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" href="../css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <style>
+    h4{
+      font-size: 14px;
+    }
+    textarea{
+      height: 100px;
+      width: 100%;
+      max-width: 100%;
+      border-color: #cccccc;
+      border-radius: 5px;
+    }
+    .input-prepend{
+      display: inline-block;
+      width: 560px;
+    }
+    .input-xlarge{
+      width: 340px;
+
+    }
+  </style>
+</head>
+
+<body class="niceScroll">
 <div class="regex" id="regex">
   <!--<h3>正则表达式测试</h3>-->
   <div class="block">
     <form class="well form-inline">
       <div class="input-prepend">
-        <span class="add-on">正则表达式</span><input type="text" id="textPattern" placeholder="在此输入正则表达式" class="input-xlarge">
-        <select class="form-control input-sm">
-          <option value="0">常用正则表达式</option>
-          <option value="regex_1">匹配中文字符</option>
-          <option value="regex_2">匹配双字节字符(包括汉字在内)</option>
-          <option value="regex_3">匹配空白行</option>
-          <option value="regex_4">匹配Email地址</option>
-          <option value="regex_5">匹配网址URL</option>
-          <option value="regex_6">匹配国内电话号码</option>
-          <option value="regex_7">匹配腾讯QQ号</option>
-          <option value="regex_8">匹配中国邮政编码</option>
-          <option value="regex_9">匹配18位身份证号</option>
-          <option value="regex_10">匹配(年-月-日)格式日期</option>
-          <option value="regex_11">匹配正整数</option>
-          <option value="regex_12">匹配负整数</option>
-          <option value="regex_13">匹配整数</option>
-          <option value="regex_14">匹配非负整数（正整数 + 0）</option>
-          <option value="regex_15">匹配非正整数（负整数 + 0）</option>
-          <option value="regex_16">匹配正浮点数</option>
-          <option value="regex_17">匹配负浮点数</option>
+        <!--<span class="add-on">正则表达式</span>-->
+        <input type="text" id="textPattern" placeholder="在此输入正则表达式" class="input-xlarge">
+        <select id="regexList" class="form-control input-sm" data-changeFn="setRegex">
+          <option value="">常用正则表达式</option>
+          <option value="[\u4e00-\u9fa5]">匹配中文字符</option>
+          <option value="[^\x00-\xff]">匹配双字节字符(包括汉字在内)</option>
+          <option value="\n\s*\r">匹配空白行</option>
+          <option value="[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?">匹配Email地址</option>
+          <option value="[a-zA-z]+://[^\s]*">匹配网址URL</option>
+          <option value="\d{3}-\d{8}|\d{4}-\{7,8}">匹配国内电话号码</option>
+          <option value="[1-9][0-9]{4,}">匹配腾讯QQ号</option>
+          <option value="[1-9]\d{5}(?!\d)">匹配中国邮政编码</option>
+          <option value="^(\d{6})(\d{4})(\d{2})(\d{2})(\d{3})([0-9]|X)$">匹配18位身份证号</option>
+          <option value="([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})-(((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)-(0[1-9]|[12][0-9]|30))|(02-(0[1-9]|[1][0-9]|2[0-8])))">匹配(年-月-日)格式日期</option>
+          <option value="^[1-9]\d*$">匹配正整数</option>
+          <option value="^-[1-9]\d*$">匹配负整数</option>
+          <option value="^-?[1-9]\d*$">匹配整数</option>
+          <option value="^[1-9]\d*|0$">匹配非负整数（正整数 + 0）</option>
+          <option value="^-[1-9]\d*|0$">匹配非正整数（负整数 + 0）</option>
+          <option value="^[1-9]\d*\.\d*|0\.\d*[1-9]\d*$">匹配正浮点数</option>
+          <option value="^-[1-9]\d*\.\d*|-0\.\d*[1-9]\d*$">匹配负浮点数</option>
         </select>
       </div>
       <label class="checkbox"><input type="checkbox" value="global" checked="checked" id="optionGlobal" name="optionGlobl">全局搜索</label>
       <label class="checkbox"><input type="checkbox" value="ignoreCase" id="optionIgnoreCase" name="optionIgnoreCase">忽略大小写</label>
-      <a href="javascript:" class="btn btn-primary"><i class="icon-chevron-down icon-white"></i>测试匹配</a>
+      <a href="javascript:" class="btn btn-primary" data-clickFn="onMatch"><i class="icon-chevron-down icon-white"></i>测试匹配</a>
+      <a href="javascript:" class="btn btn-success" data-clickFn="reset"><i class="icon-chevron-down icon-white"></i>清空</a>
     </form>
   </div>
   <div class="block">
@@ -52,7 +68,13 @@
   </div>
   <div class="block">
     <h4>匹配结果：</h4>
-    <textarea id="testResult" class="readonly" readonly></textarea>
+    <textarea id="textMatchResult" class="readonly" readonly></textarea>
   </div>
 </div>
-<script src="./js/page/regex.js"></script>
+<script src="../js/jquery-1.10.2.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/jquery.nicescroll.min.js"></script>
+<script src="../js/util.js"></script>
+<script src="../js/page/regex.js"></script>
+</body>
+</html>
