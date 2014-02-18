@@ -9,9 +9,14 @@
 
   'use strict';
 
-  var webSql = new win.webStorage.WebSql();
+  var gui = require('nw.gui');
+  var mongoose = require('mongoose');
+  var db = mongoose.connect('mongodb://localhost/test');
 
-  console.log(webSql)
+  db.on('error', console.error.bind(console, 'connection error:'));
+  db.once('open', function callback () {
+    console.log('connect success!');
+  });
 
   $(function(){
     $('.niceScroll').niceScroll({

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WebSql test</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+
+<script src="../js/WebSql.js"></script>
+<script>
+  var webSql = new webStorage.WebSql();
+  console.log(webSql);
+
+  webSql.openDatabase('test', '1.0', '测试数据库', 1024*1024, function(){});
+  //webSql.dropTable('stu');
+  webSql.createTable('stu', 'CREATE TABLE IF NOT EXISTS stu (id REAL UNIQUE, name TEXT)');
+  webSql.insert(['shaman'], 'insert into stu (id, name) values(?, ?)');
+  webSql.query('SELECT * FROM stu', function(tx, results){
+    console.log(results); //这里的仍旧是0条记录
+  });
+</script>
+</body>
+</html>

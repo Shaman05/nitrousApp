@@ -27,11 +27,11 @@
       _dataBase = openDatabase(dataBaseName, version, info, size, function (){
         typeof callback === 'function' && callback();
       });
-      /*if (!_dataBase) {
-          alert("数据库创建失败！");
+      if (!_dataBase) {
+        alert("数据库创建失败！");
       } else {
-          alert("数据库创建成功！");
-      }*/
+        alert("数据库创建成功！");
+      }
       return _dataBase;
     }
 
@@ -50,16 +50,17 @@
           },
           function (tx, error){
             alert('创建' + tableName + '表失败:' + error.message);
-          });
+          }
+        );
       });
     }
 
     //添加数据, 注意字段与值对应
-    //sql example: 'insert into tableName (id, name) values(?, ?)'
+    //sql example: 'INSERT INTO tableName (id, name) VALUES(?, ?)'
     this.insert = function (valueArr, sql){
       var dataBase = _this.openDatabase();
       var id = 'WebSqlId_' + Math.random(); //随机id
-      dataBase.transaction(function (tx) {
+      dataBase.transaction(function (tx){
         tx.executeSql(
           sql,
           [id].concat(valueArr),
@@ -68,55 +69,32 @@
           },
           function (tx, error){
             alert('添加数据失败: ' + error.message);
-          });
+          }
+        );
       });
     }
 
     // 查询
-    this.query = function () {
+    //sql example: 'SELECT * FROM stu'
+    this.query = function (sql, callback){
       var dataBase = _this.openDatabase();
-      dataBase.transaction(function (tx) {
+      dataBase.transaction(function (tx){
         tx.executeSql(
-          "SELECT * FROM stu", [],
-          function (tx, result) {
+          sql, [],
+          function (tx, results) {
             //result：SQLResultSet对象。
-            //其定义为：interface SQLResultSet {
+            //其定义为：
+            //interface SQLResultSet {
             //  readonly attribute long insertId;
             //  readonly attribute long rowsAffected;
             //  readonly attribute SQLResultSetRowList rows;
             //};
-            //             alert(result);
-            $("#datalist").children().remove();
-            for (var i = 0; i < result.rows.length; i++) {
-
-
-              var id = result.rows.item(i)['id'];
-              var name = result.rows.item(i)['name'];
-              var $dataItem = $("<div>Id:" + id + "&nbsp;&nbsp;&nbsp;&nbsp;name：" + name + " &nbsp;&nbsp; &nbsp; </div><br/>");
-
-              $dataItem.append("<a  id='" + id + "' href='javascript:;'>把名字更新为徐明祥</a>&nbsp;");
-              $dataItem.append("<a id='" + id + "' href='javascript:;'>把名字更新为祥叔</a>&nbsp;");
-              $dataItem.append("<a id='" + id + "' href='javascript:;'>删除</a>&nbsp;");
-              $($dataItem.find("a")[0]).click(function () {
-                webSql.update($(this).attr("id"), '徐明祥');
-              });
-
-              $($dataItem.find("a")[1]).click(function () {
-                webSql.update($(this).attr("id"), '祥叔');
-              });
-
-              $($dataItem.find("a")[2]).click(function () {
-                webSql.del($(this).attr("id"));
-                _this.query();
-              });
-
-              $("#datalist").append($dataItem);
-
-            }
+            typeof callback === 'function' && callback(tx, results);
           },
           function (tx, error) {
             alert('查询失败: ' + error.message);
-          });
+          }
+        );
       });
     }
 
@@ -133,7 +111,8 @@
           },
           function (tx, error){
             alert('更新失败: ' + error.message);
-          });
+          }
+        );
       });
     }
 
@@ -150,7 +129,8 @@
           },
           function (tx, error){
             alert('删除失败: ' + error.message);
-          });
+          }
+        );
       });
     }
 
